@@ -9,8 +9,13 @@
         font-family: Arial, sans-serif;
     }
     .container {
-        max-width: 400px;
+        max-width: 800px;
         margin: 50px auto;
+        display: flex;
+        justify-content: space-between;
+    }
+    .calculator {
+        flex-basis: 45%;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -49,20 +54,36 @@
 <body>
 
 <div class="container">
-    <h2>毛利率计算器</h2>
-    <p class="formula">毛利率计算公式：<br>
-    毛利率 = (售价 - 成本) / 售价 × 100%<br>
-    成本 = 原材料 + 包装费 + 运费</p>
-    <label for="material">原材料成本：</label>
-    <input type="number" id="material" placeholder="原材料成本"><br>
-    <label for="packaging">包装费：</label>
-    <input type="number" id="packaging" placeholder="包装费"><br>
-    <label for="freight">运费：</label>
-    <input type="number" id="freight" placeholder="运费"><br>
-    <label for="price">售价：</label>
-    <input type="number" id="price" placeholder="售价"><br>
-    <button onclick="calculateGrossProfit()">计算毛利率</button>
-    <div id="result"></div>
+    <div class="calculator">
+        <h2>毛利率计算器</h2>
+        <p class="formula">毛利率计算公式：<br>
+        毛利率 = (售价 - 成本) / 售价 × 100%<br>
+        成本 = 原材料 + 包装费 + 运费</p>
+        <label for="material">原材料成本：</label>
+        <input type="number" id="material" placeholder="原材料成本"><br>
+        <label for="packaging">包装费：</label>
+        <input type="number" id="packaging" placeholder="包装费"><br>
+        <label for="freight">运费：</label>
+        <input type="number" id="freight" placeholder="运费"><br>
+        <label for="price">售价：</label>
+        <input type="number" id="price" placeholder="售价"><br>
+        <button onclick="calculateGrossProfit()">计算毛利率</button>
+        <div id="result"></div>
+    </div>
+    
+    <div class="calculator">
+        <h2>产品成本计算器</h2>
+        <label for="materialSpec">原材料规格：（单位：体积/重量/袋）</label>
+        <input type="number" id="materialSpec" placeholder="原材料规格"><br>
+        <label for="materialPrice">原材料采购价：（元）</label>
+        <input type="number" id="materialPrice" placeholder="原材料采购价"><br>
+        <label for="productSpec">产品出品规格：（单位：体积/重量/袋）</label>
+        <input type="number" id="productSpec" placeholder="产品出品规格"><br>
+        <button onclick="calculateProductShare()">计算产品出品份额</button>
+        <div id="productShareResult"></div><br>
+        <button onclick="calculateCostPerServing()">计算每份成本</button>
+        <div id="costPerServingResult"></div>
+    </div>
 </div>
 
 <script>
@@ -81,6 +102,34 @@ function calculateGrossProfit() {
     var grossProfit = (((price - totalCost) / price) * 100).toFixed(2);
     
     document.getElementById('result').innerText = "毛利率为：" + grossProfit + "%";
+}
+
+function calculateProductShare() {
+    var materialSpec = parseFloat(document.getElementById('materialSpec').value);
+    var productSpec = parseFloat(document.getElementById('productSpec').value);
+    
+    if (isNaN(materialSpec) || isNaN(productSpec)) {
+        document.getElementById('productShareResult').innerText = "请输入有效的数字";
+        return;
+    }
+    
+    var productShare = ( materialSpec/ productSpec).toFixed(2);
+    
+    document.getElementById('productShareResult').innerText = "产品出品份额为：" + productShare+"份";
+}
+
+function calculateCostPerServing() {
+    var materialPrice = parseFloat(document.getElementById('materialPrice').value);
+    var productShare = parseFloat(document.getElementById('productShareResult').innerText.split('：')[1]);
+    
+    if (isNaN(materialPrice) || isNaN(productShare)) {
+        document.getElementById('costPerServingResult').innerText = "请输入有效的数字";
+        return;
+    }
+    
+    var costPerServing = (materialPrice / productShare).toFixed(2);
+    
+    document.getElementById('costPerServingResult').innerText = "每份成本为：" + costPerServing+"元";
 }
 </script>
 
