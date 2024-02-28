@@ -41,17 +41,19 @@
         font-size: 18px;
         font-weight: bold;
     }
+    .formula {
+        color: red;
+    }
 </style>
 </head>
 <body>
 
 <div class="container">
     <h2>毛利率计算器</h2>
-    <!-- 毛利率=(售价-成本)/售价×100%，成本=原材料+包装费+运费 -->
-    <p>毛利率计算公式：<br>
+    <p class="formula">毛利率计算公式：<br>
     毛利率 = (售价 - 成本) / 售价 × 100%<br>
     成本 = 原材料 + 包装费 + 运费</p>
-    <label for="material">原材料：</label>
+    <label for="material">原材料成本：</label>
     <input type="number" id="material" placeholder="原材料成本"><br>
     <label for="packaging">包装费：</label>
     <input type="number" id="packaging" placeholder="包装费"><br>
