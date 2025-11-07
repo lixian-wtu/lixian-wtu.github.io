@@ -450,7 +450,7 @@
       resetBtn.classList.toggle('visible', has);
     }
 
-    // AI 融合生成
+    // AI 融合生成 —— 请求你的服务器
     fusionBtn.addEventListener('click', async () => {
       const filled = comboItems
         .map(item => {
@@ -468,7 +468,7 @@
       fusionBtn.textContent = '融合中…';
 
       try {
-        const resp = await fetch('https://your-backend-url.onrender.com/fusion', {  // 替换为你的后端
+        const resp = await fetch('http://8.146.206.41:1314/fusion', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ images: filled })
